@@ -1,0 +1,3 @@
+Allison Charlize Arriaza Chachagua - A00844457
+
+Con esta actividad entendí que las funciones recursivas pueden llegar a ser mas lentas y usar mas memoria debido a que la función se sigue llamando a si misma hasta llegar con al caso base. Esto lo noté a la hora de realizar el ejercicio de Fibonacci en donde se repite las llamadas de la función hasta obtener el resultado. También entendí que si existe una formula directa como la que se ocupó en "sumFormula" es mejor utilizarla ya que obtiene el resultado de manera más directa que realizando códigos con iteraciones. En el caso de bacterias Recursivas, si se tuviera que calcular 100K dias, utilizaría la version iterativa ya que consumiría mas memoria en un programa que se puede realizar de otra manera. 
