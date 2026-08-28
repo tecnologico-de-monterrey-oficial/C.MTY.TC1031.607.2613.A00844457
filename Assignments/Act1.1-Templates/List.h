@@ -8,12 +8,12 @@ using namespace std;
 
 template <typename T>  // Esta clase ocupa Templates
 class List{
-private:
-vector<T> list;
-int size;
+    private:
+    vector<T> list;
+    int size;
 
 
-public:
+    public:
     List();
 
     void insert(T data);
