@@ -1,5 +1,4 @@
-//Allison Charlize Arriaza Chachagua
-//A00844457
+
 
 #include <iostream>
 #include <list>

@@ -1,16 +1,16 @@
 //Allison Charlize Arriaza Chachagua
 //A00844457
 
+//====================================== Ejer 1=================================================
+
 #include <iostream>
 #include <vector>
 #include <cstdlib> // numeros aleatorios
 #include <ctime>
 #include <algorithm> // para ocupar sort
 #include <chrono> //medir el tiempo de búsqueda secuencial
-#include <string>
 using namespace std;
 
-//====================================== Ejer 1=================================================
 
 
 
@@ -23,7 +23,9 @@ int pedirNumero(){
 
 }
 
-bool searchSequence(vector<int> randomNum, int target){
+
+// Se le agrega const porque sino mostraria el tiempo de buscar y copia de la lista de elementos
+bool searchSequence( const vector<int> &randomNum, int target){
     for (int i = 0; i<randomNum.size(); i++){
         if (randomNum[i] == target){
             return true;
@@ -34,7 +36,7 @@ bool searchSequence(vector<int> randomNum, int target){
 
 }
 
-bool searchBinary(vector<int> randomNum, int target){
+bool searchBinary(const vector<int> &randomNum, int target){
     int start = 0;
     int end = randomNum.size() -1;
     int middle; 
@@ -60,74 +62,9 @@ bool searchBinary(vector<int> randomNum, int target){
 
 
 
-// =========================================== Ejercicio 2 =============================================
-
-
-int pedirNStr(){
-    int n; 
-    cout<<"Cuantos strings desea ingresar? ";
-    cin >> n;
-
-    return n;
-}
-
-char repeatSeq(string repeatedList, int &comparacion){
-    int seqComp = 0; 
-    
-    for (int i = 0; i<repeatedList.size() -1; i+=2){
-        seqComp ++;
-
-        if (repeatedList[i] != repeatedList[i + 1]){
-            comparacion = seqComp;
-            return repeatedList[i];
-
-
-        }
-
-    }
-    comparacion = seqComp;
-    return repeatedList[repeatedList.size() - 1];
-
-
-
-}
-
-char repeatedBin (string repeatedList, int & comparacion){
-    int compBin = 0; 
-    int compStart = 0;
-    int compEnd = repeatedList.size() - 1;
-    int compMiddle ;
-
-    while (compStart<compEnd){
-        compMiddle = (compStart + compEnd)/2;
-
-
-        if (compMiddle % 2 != 0){
-            compMiddle --;
-        }
-        compBin ++;
-
-        if (repeatedList[compMiddle] == repeatedList[compMiddle + 1]){
-            compStart = compMiddle + 2;
-                
-        } else {
-            compEnd = compMiddle;
-
-        }
-            
-    } 
-
-    comparacion = compBin;
-    return repeatedList[compStart];
-      
-}
-
-
-
 
 
 int main (){
-    // Ejer 1 ----------------------------------------------------------------------------------------
     vector<int> randomNum;
     srand(time(0));
     
@@ -179,37 +116,6 @@ int main (){
 
 
     }
-
-   // ---------------------------------------------------------------------------------
-   // ---------------------------- Ejer 2 --------------------------------------------
-
-   int n = pedirNStr();
-
-   for (int i = 0; i<n; i++){
-    string cadena;
-    cout<<"Ingrese la cadena de caracteres"<< i + 1<< ": ";
-    cin>> cadena; 
-
-    int compSeq =0;
-    int compBin = 0;
-
-    char resultSeq = repeatSeq(cadena, compSeq);
-    char resultBin = repeatedBin(cadena, compBin);
-
-    cout << resultSeq << " " << compSeq << " "
-        << resultBin << " " << compBin << endl;
-
-
-   }
-
-
-
-
-
-    
-
-
-
 
 
     return 0;
