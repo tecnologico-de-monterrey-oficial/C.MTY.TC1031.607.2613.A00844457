@@ -179,6 +179,72 @@ void shellSort(vector<Registro>& registros){
 
 }
 
+// Merge Sort
+
+
+void Merge(vector<Registro>& registros, int left, int right, int mid){
+    
+    vector<Registro> izquierda;
+    for(int i = left;i<=mid; i++ ){
+        izquierda.push_back(registros[i]);
+    }
+
+
+    vector<Registro>derecha;
+    for (int j = mid +1; j<= right; j++){
+        derecha.push_back(registros[j]);
+
+    }
+
+    int i = 0;
+    int j =0;
+    int index = left;
+
+    while(i<izquierda.size() && j<derecha.size()){
+
+        if(compFechas(izquierda[i], derecha[j])){
+
+            registros[index] = izquierda[i];
+            i++;
+            
+        } else {
+            registros[index] = derecha[j];
+            j++;
+        }
+
+        index++;
+
+
+    }
+
+    while (i<izquierda.size()){
+        registros[index] = izquierda[i];
+        i++;
+        index++;
+    }
+
+    while(j<derecha.size()){
+        registros[index] = derecha[j];
+        j++;
+        index++;
+    }
+
+
+}
+
+void MergeSort(vector<Registro>& registros, int left, int right){
+    if(left<right){
+        int mid = (left + right)/2;
+
+        MergeSort(registros, left, mid);
+        MergeSort(registros, mid+1, right);
+        Merge(registros, left, mid, right);
+
+
+    }
+
+}
+
 
 
 
@@ -229,7 +295,8 @@ int main (){
     //BubbleSort(registros);
     //SelectionSort(registros);
     //InsertionSort(registros);
-    shellSort(registros);
+    //shellSort(registros);
+    MergeSort(registros, 0, registros.size()-1);
 
     for(int i =0; i<5; i++){
         cout<< registros[i].mes<<" "<<registros[i].dia<<" "
