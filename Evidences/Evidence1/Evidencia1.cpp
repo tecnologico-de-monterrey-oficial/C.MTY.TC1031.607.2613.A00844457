@@ -154,6 +154,32 @@ void InsertionSort(vector<Registro>& registros){
 }
 
 
+void shellSort(vector<Registro>& registros){
+    int gap = registros.size()/2;
+
+    while (gap>0){
+        for (int i = gap; i<registros.size(); i++){
+
+            int j = i;
+
+            while (j>=gap && compFechas(registros[j], registros[j-gap])){
+
+                Registro temporal = registros[j];
+                registros[j]= registros[j-gap];
+                registros[j-gap] = temporal;
+
+            
+                j = j-gap;
+            }
+
+        }
+
+        gap = gap/2;
+    }
+
+}
+
+
 
 
 int main (){
@@ -202,7 +228,8 @@ int main (){
 
     //BubbleSort(registros);
     //SelectionSort(registros);
-    InsertionSort(registros);
+    //InsertionSort(registros);
+    shellSort(registros);
 
     for(int i =0; i<5; i++){
         cout<< registros[i].mes<<" "<<registros[i].dia<<" "
@@ -210,10 +237,7 @@ int main (){
         <<registros[i].ip<<" "<<registros[i].contenido<< " "<<endl;
     }
 
-    // for (int i = 0; i<registros.size(); i++){
 
-
-    // }
     
 
 
