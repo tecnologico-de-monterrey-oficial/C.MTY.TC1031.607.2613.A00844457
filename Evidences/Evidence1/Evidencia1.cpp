@@ -94,6 +94,23 @@ bool compFechas(Registro primer, Registro segundo){
 
 }
 
+// opciones de sort
+
+void BubbleSort(vector<Registro>& registros){
+    for (int i =0; i<registros.size()-1; i++){
+        for(int j=0; j<registros.size()-1-i; j++){
+            if(compFechas(registros[j+1], registros[j])){
+
+                Registro temporal = registros[j];
+                registros[j] = registros[j+1];
+                registros[j+1]= temporal;
+
+            }
+        }
+
+    }
+}
+
 
 
 
@@ -138,6 +155,14 @@ int main (){
     }
 
     cout<<"# total de registros: "<<registros.size()<<endl;
+
+    BubbleSort(registros);
+
+    for(int i =0; i<5; i++){
+        cout<< registros[i].mes<<" "<<registros[i].dia<<" "
+        <<registros[i].anno<< " "<<registros[i].hora<< " "
+        <<registros[i].ip<<" "<<registros[i].contenido<< " "<<endl;
+    }
 
     // for (int i = 0; i<registros.size(); i++){
 
