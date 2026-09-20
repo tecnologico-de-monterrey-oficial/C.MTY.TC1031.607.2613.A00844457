@@ -284,6 +284,20 @@ void QuickSort(vector<Registro>& registros, int left, int right){
     }
 }
 
+void swapSort(vector<Registro>& registros){
+    for(int i = 0; i<registros.size(); i++){
+        for(int j = i +1 ; j<registros.size(); j++){
+
+            if(compFechas(registros[j], registros[i])){
+
+                Registro cambiar = registros[j];
+                registros[j] = registros[i];
+                registros[i] = cambiar;
+            }
+        }
+    }
+}
+
 
 
 
@@ -336,7 +350,9 @@ int main (){
     //InsertionSort(registros);
     //shellSort(registros);
     //MergeSort(registros, 0, registros.size()-1);
-    QuickSort(registros, 0, registros.size() -1);
+    //QuickSort(registros, 0, registros.size() -1);
+    swapSort(registros);
+
 
     for(int i =0; i<5; i++){
         cout<< registros[i].mes<<" "<<registros[i].dia<<" "
