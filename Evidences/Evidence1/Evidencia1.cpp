@@ -136,6 +136,23 @@ void SelectionSort(vector<Registro>& registros){
 
 }
 
+void InsertionSort(vector<Registro>& registros){
+    for (int i = 1; i<registros.size(); i++){
+
+        Registro actual = registros[i];
+        int j = i-1;
+
+        while (j>= 0 && compFechas(actual, registros[j])){
+            registros[j+1] = registros[j];
+            j--;
+
+        }
+
+        registros[j+1] = actual;
+
+    }
+}
+
 
 
 
@@ -181,8 +198,11 @@ int main (){
 
     cout<<"# total de registros: "<<registros.size()<<endl;
 
+    //----------------- Ordenar registros  -------------------------
+
     //BubbleSort(registros);
-    SelectionSort(registros);
+    //SelectionSort(registros);
+    InsertionSort(registros);
 
     for(int i =0; i<5; i++){
         cout<< registros[i].mes<<" "<<registros[i].dia<<" "
