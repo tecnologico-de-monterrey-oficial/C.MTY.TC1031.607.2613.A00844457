@@ -13,7 +13,7 @@ struct Registro {
     string contenido;
 };
 
-// Asignacion numericsa de los meses
+// ------------------Asignacion numericsa de los meses-------------------
 
 int convertMeses(string mes){
     if(mes == "Jan"){
@@ -46,7 +46,7 @@ int convertMeses(string mes){
 
 }
 
-// Conversion de tiempo
+// -----------------Conversion de tiempo-----------------------
 
 int convertirTiempo(string hora){
     int h;
@@ -94,7 +94,7 @@ bool compFechas(Registro primer, Registro segundo){
 
 }
 
-// opciones de sort
+//----------------- opciones de sort-----------------------------
 
 void BubbleSort(vector<Registro>& registros){
     for (int i =0; i<registros.size()-1; i++){
@@ -109,6 +109,31 @@ void BubbleSort(vector<Registro>& registros){
         }
 
     }
+}
+
+void SelectionSort(vector<Registro>& registros){
+    for(int i = 0;i<registros.size()-1; i++ ){
+
+        int minimo = i;
+
+        for(int j = i + 1; j<registros.size(); j++){
+            if(compFechas(registros[j], registros[minimo])){
+                minimo = j;
+
+            }
+
+        }
+
+        // cambio de lugar
+        if(minimo != i){
+            Registro temporal = registros[i];
+            registros[i] = registros[minimo];
+            registros[minimo] = temporal;
+
+        }
+    }
+
+
 }
 
 
@@ -156,7 +181,8 @@ int main (){
 
     cout<<"# total de registros: "<<registros.size()<<endl;
 
-    BubbleSort(registros);
+    //BubbleSort(registros);
+    SelectionSort(registros);
 
     for(int i =0; i<5; i++){
         cout<< registros[i].mes<<" "<<registros[i].dia<<" "
