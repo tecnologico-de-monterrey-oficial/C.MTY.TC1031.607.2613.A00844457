@@ -245,6 +245,45 @@ void MergeSort(vector<Registro>& registros, int left, int right){
 
 }
 
+// quick sort
+
+int getPivot(vector<Registro>& registros, int left, int right){
+
+    int aux = left -1;
+    int pivot = right;
+
+    for (int i = left; i<pivot; i++){
+        if(compFechas(registros[i], registros[pivot])){
+            aux++;
+
+            Registro temporal = registros[aux];
+            registros[aux] = registros[i];
+            registros[i] = temporal;
+            
+        }
+    }
+
+    aux++;
+    Registro temporal = registros[aux];
+    registros[aux] = registros[pivot];
+    registros[pivot] = temporal;
+
+    return aux;
+
+
+}
+
+void QuickSort(vector<Registro>& registros, int left, int right){
+    if(left<right){
+
+        int pivot = getPivot(registros, left, right);
+        QuickSort(registros, left, pivot -1);
+        QuickSort(registros, pivot + 1, right);
+
+
+    }
+}
+
 
 
 
@@ -296,7 +335,8 @@ int main (){
     //SelectionSort(registros);
     //InsertionSort(registros);
     //shellSort(registros);
-    MergeSort(registros, 0, registros.size()-1);
+    //MergeSort(registros, 0, registros.size()-1);
+    QuickSort(registros, 0, registros.size() -1);
 
     for(int i =0; i<5; i++){
         cout<< registros[i].mes<<" "<<registros[i].dia<<" "
