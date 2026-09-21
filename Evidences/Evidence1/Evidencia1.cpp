@@ -182,7 +182,7 @@ void shellSort(vector<Registro>& registros){
 // Merge Sort
 
 
-void Merge(vector<Registro>& registros, int left, int right, int mid){
+void Merge(vector<Registro>& registros, int left,int mid, int right ){
     
     vector<Registro> izquierda;
     for(int i = left;i<=mid; i++ ){
@@ -343,15 +343,52 @@ int main (){
 
     cout<<"# total de registros: "<<registros.size()<<endl;
 
-    //----------------- Ordenar registros  -------------------------
 
-    //BubbleSort(registros);
-    //SelectionSort(registros);
-    //InsertionSort(registros);
-    //shellSort(registros);
-    //MergeSort(registros, 0, registros.size()-1);
-    //QuickSort(registros, 0, registros.size() -1);
-    swapSort(registros);
+
+    //----------------- Ordenar registros  -------------------------
+    cout << "1. Swap Sort" << endl;
+    cout << "2. Bubble Sort" << endl;
+    cout << "3. Selection Sort" << endl;
+    cout << "4. Insertion Sort" << endl;
+    cout << "5. Shell Sort" << endl;
+    cout << "6. Merge Sort" << endl;
+    cout << "7. Quick Sort" << endl;
+
+    int opcionSort;
+    cin >> opcionSort;
+
+    vector<Registro> copia = registros;
+
+    if(opcionSort ==1){
+        swapSort(copia);
+    } else if(opcionSort == 2){
+        BubbleSort(copia);
+
+    }else if(opcionSort == 3){
+        SelectionSort(copia);
+
+    } else if(opcionSort == 4){
+        InsertionSort(copia);
+
+    } else if(opcionSort == 5){
+        shellSort(copia);
+ 
+    } else if(opcionSort == 6){
+        MergeSort(copia, 0, copia.size()-1);
+    } else if(opcionSort==7){
+        QuickSort(copia, 0, copia.size() -1);
+
+    }
+
+
+    
+    
+    
+    
+    
+    
+    
+    
 
 
     for(int i =0; i<5; i++){
