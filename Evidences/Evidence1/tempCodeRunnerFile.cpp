@@ -1,1 +1,10 @@
-posicionIncio
+        cout << "Algoritmo: " << tipoAlgoritmo << endl;
+        cout<<"Archivo: "<<nombreArchivo<<endl;
+        cout<<"Cantidad de registros: "<<copia.size()<<endl;
+        cout << "Mejor caso: "<<mejorCaso<<endl;
+        cout<<"Peor caso: "<<peorCaso<<endl;
+        cout<<"Tiempo de duración: "<<duracion.count()<<" microsegundos"<<endl;
+        cout<<"Prediccion: " << prediccion << endl;
+        cout<<"Justificacion: "<<justificacion<<endl;
+        cout<<"Resultado observado: "<<resultadoPrediccion<<endl;
+        cout<<comparacionPrediccion<<endl;

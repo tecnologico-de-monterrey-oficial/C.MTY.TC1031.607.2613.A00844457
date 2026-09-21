@@ -1,6 +1,0 @@
-Algoritmo: Shell Sort
-Complejidad: O(n^2)
-Tiempo de duración: 160681 microsegundos
-Total de registros: 6818
-Archivo: log607-1.txt
-Prediccion: Rapido
