@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <sstream>
+#include <chrono>
 using namespace std; 
 
 struct Registro {
@@ -356,46 +357,56 @@ int main (){
 
     int opcionSort;
     cin >> opcionSort;
-
     vector<Registro> copia = registros;
 
+    string tipoAlgoritmo;
+    string complejidad;
+
+    auto tiempoInicial = chrono::high_resolution_clock::now();
+
     if(opcionSort ==1){
+        tipoAlgoritmo = "Swap Sort";
+        complejidad = "O(n^2";
         swapSort(copia);
+
     } else if(opcionSort == 2){
+        tipoAlgoritmo = "Bubble Sort";
+        complejidad = "O(n^2)";
         BubbleSort(copia);
 
     }else if(opcionSort == 3){
+        tipoAlgoritmo = "Selection Sort";
+        complejidad = "O(n^2)";
         SelectionSort(copia);
 
     } else if(opcionSort == 4){
+        tipoAlgoritmo = "Insertion Sort";
+        complejidad = "O(n^2)";
         InsertionSort(copia);
 
     } else if(opcionSort == 5){
+        tipoAlgoritmo = "Shell Sort";
+        complejidad = "O(n^2)";
         shellSort(copia);
  
     } else if(opcionSort == 6){
+        tipoAlgoritmo = "Merge Sort ";
+        complejidad = "O(nlogn)";
         MergeSort(copia, 0, copia.size()-1);
     } else if(opcionSort==7){
+        tipoAlgoritmo = " Quick Sort";
+        complejidad = "O(nlog n) promedio, O(n^2) peor caso";
         QuickSort(copia, 0, copia.size() -1);
 
     }
 
+    auto tiempoFinal = chrono::high_resolution_clock::now();
 
-    
-    
-    
-    
-    
-    
-    
-    
+    auto duracion = chrono::duration_cast<chrono::microseconds>(tiempoFinal - tiempoInicial);
+    cout<<"Tiempo de duración: "<<duracion.count()<<" microsegundos"<<endl;
+    cout << "Algoritmo: " << tipoAlgoritmo << endl;
+    cout << "Complejidad: " << complejidad << endl;
 
-
-    for(int i =0; i<5; i++){
-        cout<< registros[i].mes<<" "<<registros[i].dia<<" "
-        <<registros[i].anno<< " "<<registros[i].hora<< " "
-        <<registros[i].ip<<" "<<registros[i].contenido<< " "<<endl;
-    }
 
 
     
