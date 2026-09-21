@@ -1,4 +1,6 @@
-Algoritmo:  Quick Sort
-Complejidad: O(nlog n) promedio, O(n^2) peor caso
-Tiempo de duración: 2590072 microsegundos
+Algoritmo: Shell Sort
+Complejidad: O(n^2)
+Tiempo de duración: 160681 microsegundos
 Total de registros: 6818
+Archivo: log607-1.txt
+Prediccion: Rapido

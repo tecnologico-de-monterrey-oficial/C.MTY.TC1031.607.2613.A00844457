@@ -349,161 +349,223 @@ int busquedaFinal(vector<Registro>& registros, Registro fechaFinal){
 
 
 int main (){
-    // abrir archivos
+    int continuar = 1;
 
-    int opcionArchivo;
-    ifstream archivo;
+    while(continuar == 1){
 
-    cout<< "=========== Menú================"<< endl; 
-    cout<< "Escriba 1 para escoger el archivo  log607-1.txt (desordenado)" <<endl;
-    cout<< "Escriba 2 para  escoger el archivo log607-2.txt (casi ordenado)"<< endl; 
-    cin>>opcionArchivo;
+        // abrir archivos
+        int opcionArchivo;
+        ifstream archivo;
+        string nombreArchivo;
 
-    if (opcionArchivo == 1){
-        archivo.open("log607-1.txt");
+        cout<< "=========== Menú================"<< endl; 
+        cout<< "Escriba 1 para escoger el archivo  log607-1.txt (desordenado)" <<endl;
+        cout<< "Escriba 2 para  escoger el archivo log607-2.txt (casi ordenado)"<< endl; 
+        cin>>opcionArchivo;
 
-    } else if (opcionArchivo == 2){
-        archivo.open("log607-2.txt");
+        if (opcionArchivo == 1){
+            archivo.open("log607-1.txt");
+            nombreArchivo = "log607-1.txt";
 
-    } else {
-        cout<<"Error al cargar"<<endl;
-    }
+        } else if (opcionArchivo == 2){
+            archivo.open("log607-2.txt");
+            nombreArchivo = "log607-2.txt";
 
-    // leer lineas del archivo
-    vector<Registro> registros;
-    string linea;
-
-    while(getline(archivo, linea)){
-        Registro dato;
-        stringstream ss(linea);
-
-        ss>>dato.mes;
-        ss>>dato.dia;
-        ss>>dato.anno;
-        ss>>dato.hora;
-        ss>>dato.ip;
-        
-
-        getline(ss, dato.contenido);
-        registros.push_back(dato);
-    }
-
-    cout<<"# total de registros: "<<registros.size()<<endl;
-
-
-
-    //----------------- Ordenar registros  -------------------------
-    cout << "1. Swap Sort" << endl;
-    cout << "2. Bubble Sort" << endl;
-    cout << "3. Selection Sort" << endl;
-    cout << "4. Insertion Sort" << endl;
-    cout << "5. Shell Sort" << endl;
-    cout << "6. Merge Sort" << endl;
-    cout << "7. Quick Sort" << endl;
-
-    int opcionSort;
-    cin >> opcionSort;
-    vector<Registro> copia = registros;
-
-    string tipoAlgoritmo;
-    string complejidad;
-
-    auto tiempoInicial = chrono::high_resolution_clock::now();
-
-    if(opcionSort ==1){
-        tipoAlgoritmo = "Swap Sort";
-        complejidad = "O(n^2";
-        swapSort(copia);
-
-    } else if(opcionSort == 2){
-        tipoAlgoritmo = "Bubble Sort";
-        complejidad = "O(n^2)";
-        BubbleSort(copia);
-
-    }else if(opcionSort == 3){
-        tipoAlgoritmo = "Selection Sort";
-        complejidad = "O(n^2)";
-        SelectionSort(copia);
-
-    } else if(opcionSort == 4){
-        tipoAlgoritmo = "Insertion Sort";
-        complejidad = "O(n^2)";
-        InsertionSort(copia);
-
-    } else if(opcionSort == 5){
-        tipoAlgoritmo = "Shell Sort";
-        complejidad = "O(n^2)";
-        shellSort(copia);
- 
-    } else if(opcionSort == 6){
-        tipoAlgoritmo = "Merge Sort ";
-        complejidad = "O(nlogn)";
-        MergeSort(copia, 0, copia.size()-1);
-    } else if(opcionSort==7){
-        tipoAlgoritmo = " Quick Sort";
-        complejidad = "O(nlog n) promedio, O(n^2) peor caso";
-        QuickSort(copia, 0, copia.size() -1);
-
-    }
-
-    auto tiempoFinal = chrono::high_resolution_clock::now();
-    auto duracion = chrono::duration_cast<chrono::microseconds>(tiempoFinal - tiempoInicial);
-
-    cout << "Algoritmo: " << tipoAlgoritmo << endl;
-    cout << "Complejidad: " << complejidad << endl;
-    cout<<"Tiempo de duración: "<<duracion.count()<<" microsegundos"<<endl;
-
-    // --------------------Archivo final ------------------------
-
-    ofstream archivoFinal("output607.txt");
-    archivoFinal<<"Algoritmo: "<<tipoAlgoritmo<<endl;
-    archivoFinal << "Complejidad: " << complejidad << endl;
-    archivoFinal<<"Tiempo de duración: "<<duracion.count()<<" microsegundos"<<endl;
-    archivoFinal<<"Total de registros: "<<copia.size()<<endl;
-
-    //Registros
-    Registro fechaIncial;
-    Registro fechaFinal;
-
-    cout<<"Fecha inicial (Mes, Dia, Anno, Hora): ";
-    cin>>fechaIncial.mes>>fechaIncial.dia>>fechaIncial.anno>>fechaIncial.hora;
-
-    cout<<"Fecha final (Mes, Dia, Anno, Hora): ";
-    cin>>fechaFinal.mes>>fechaFinal.dia>>fechaFinal.anno>>fechaFinal.hora;
-
-    int posicionIncio = buscarInicio(copia, fechaIncial);
-    int posicionFinal = busquedaFinal(copia, fechaFinal);
-
-    // ARchivo Rage
-
-    if (posicionIncio<= posicionFinal){
-
-        ofstream resultados("range607.txt");
-
-        for(int i = posicionIncio; i<=posicionFinal; i++){
-            resultados <<copia[i].mes<< " "<<copia[i].dia<< " "
-            <<copia[i].anno<< " "<<copia[i].hora<< " "
-            <<copia[i].ip<<copia[i].contenido<<endl;
+        } else {
+            cout<<"Error al cargar"<<endl;
         }
 
-        cout<< "Los resultados fueron guardados en range607.txt"<<endl;
+        // leer lineas del archivo
+        vector<Registro> registros;
+        string linea;
+
+        while(getline(archivo, linea)){
+            Registro dato;
+            stringstream ss(linea);
+
+            ss>>dato.mes;
+            ss>>dato.dia;
+            ss>>dato.anno;
+            ss>>dato.hora;
+            ss>>dato.ip;
+            
+
+            getline(ss, dato.contenido);
+            registros.push_back(dato);
+        }
+
+        cout<<"# total de registros: "<<registros.size()<<endl;
 
 
-    }  else {
-        cout << "No se encontraron registros en ese rango" << endl;
+
+        //----------------- Ordenar registros  -------------------------
+        cout << "1. Swap Sort" << endl;
+        cout << "2. Bubble Sort" << endl;
+        cout << "3. Selection Sort" << endl;
+        cout << "4. Insertion Sort" << endl;
+        cout << "5. Shell Sort" << endl;
+        cout << "6. Merge Sort" << endl;
+        cout << "7. Quick Sort" << endl;
+
+        int opcionSort;
+        cin >> opcionSort;
+        vector<Registro> copia = registros;
+
+        string tipoAlgoritmo;
+        string mejorCaso;
+        string peorCaso;
+        string prediccion;
+        string justificacion;
+
+
+
+        cout<<"Antes de ejecutar el algoritmo, como crees que sera su rendimiento?"<<endl;
+        cout<<"1. Rapido"<<endl;
+        cout<<"2. Lento"<<endl;
+        int opcionPrediccion;
+        cin>>opcionPrediccion;
+
+        if(opcionPrediccion == 1){
+            prediccion = "Rapido";
+        } else if(opcionPrediccion == 2){
+            prediccion = "Lento";
+        }
+
+        cin.ignore();
+        cout<<"Por que crees que tendra ese rendimiento? ";
+        getline(cin, justificacion);
+
+        auto tiempoInicial = chrono::high_resolution_clock::now();
+
+        if(opcionSort ==1){
+            tipoAlgoritmo = "Swap Sort";
+            mejorCaso = "O(n^2)";
+            peorCaso = "O(n^2)";
+            swapSort(copia);
+
+        } else if(opcionSort == 2){
+            tipoAlgoritmo = "Bubble Sort";
+            mejorCaso = "O(n^2)";
+            peorCaso = "O(n^2)";
+            BubbleSort(copia);
+
+        }else if(opcionSort == 3){
+            tipoAlgoritmo = "Selection Sort";
+            mejorCaso = "O(n^2)";
+            peorCaso = "O(n^2)";
+            SelectionSort(copia);
+
+        } else if(opcionSort == 4){
+            tipoAlgoritmo = "Insertion Sort";
+            mejorCaso = "O(n)";
+            peorCaso = "O(n^2)";
+            InsertionSort(copia);
+
+        } else if(opcionSort == 5){
+            tipoAlgoritmo = "Shell Sort";
+            mejorCaso = "O(n log n)";
+            peorCaso = "O(n^2)";
+            shellSort(copia);
+    
+        } else if(opcionSort == 6){
+            tipoAlgoritmo = "Merge Sort ";
+            mejorCaso = "O(n log n)";
+            peorCaso = "O(n log n)";
+            MergeSort(copia, 0, copia.size()-1);
+        } else if(opcionSort==7){
+            tipoAlgoritmo = " Quick Sort";
+            mejorCaso = "O(n log n)";
+            peorCaso = "O(n^2)";
+            QuickSort(copia, 0, copia.size() -1);
+
+        }
+
+        auto tiempoFinal = chrono::high_resolution_clock::now();
+        auto duracion = chrono::duration_cast<chrono::microseconds>(tiempoFinal - tiempoInicial);
+
+        string resultadoPrediccion;
+        string comparacionPrediccion;
+
+        if(duracion.count() < 1000000){
+            resultadoPrediccion = "Rapido";
+        } else{
+            resultadoPrediccion = "Lento";
+        }
+
+        if(prediccion == resultadoPrediccion){
+            comparacionPrediccion = "La prediccion coincidio con el resultado";
+        } else{
+            comparacionPrediccion = "La prediccion no coincidio con el resultado";
+        }
+
+        cout << "Algoritmo: " << tipoAlgoritmo << endl;
+        cout<<"Archivo: "<<nombreArchivo<<endl;
+        cout<<"Cantidad de registros: "<<copia.size()<<endl;
+        cout << "Mejor caso: "<<mejorCaso<<endl;
+        cout<<"Peor caso: "<<peorCaso<<endl;
+        cout<<"Tiempo de duración: "<<duracion.count()<<" microsegundos"<<endl;
+        cout<<"Prediccion: " << prediccion << endl;
+        cout<<"Justificacion: "<<justificacion<<endl;
+        cout<<"Resultado observado: "<<resultadoPrediccion<<endl;
+        cout<<comparacionPrediccion<<endl;
+        
+
+        // --------------------Archivo final ------------------------
+
+        ofstream archivoFinal("output608.txt");
+
+        for(int i = 0; i<copia.size(); i++){
+            archivoFinal<<copia[i].mes<<" "<<copia[i].dia<<" "
+            <<copia[i].anno<<" "<<copia[i].hora<<" "
+            <<copia[i].ip<<copia[i].contenido<<endl;
+        }
+        archivoFinal.close();
+        cout<<"Los registros ordenados fueron guardados en output608.txt"<<endl;
+
+
+        //Registros
+        Registro fechaIncial;
+        Registro fechaFinal;
+
+        cout<<"Fecha inicial (Mes, Dia, Anno, Hora): ";
+        cin>>fechaIncial.mes>>fechaIncial.dia>>fechaIncial.anno>>fechaIncial.hora;
+
+        cout<<"Fecha final (Mes, Dia, Anno, Hora): ";
+        cin>>fechaFinal.mes>>fechaFinal.dia>>fechaFinal.anno>>fechaFinal.hora;
+
+        int posicionIncio = buscarInicio(copia, fechaIncial);
+        int posicionFinal = busquedaFinal(copia, fechaFinal);
+
+        // ARchivo Rage
+
+        if (posicionIncio<= posicionFinal){
+
+            ofstream resultados("range607.txt");
+
+            for(int i = posicionIncio; i<=posicionFinal; i++){
+                resultados <<copia[i].mes<< " "<<copia[i].dia<< " "
+                <<copia[i].anno<< " "<<copia[i].hora<< " "
+                <<copia[i].ip<<copia[i].contenido<<endl;
+            }
+
+            cout<< "Los resultados fueron guardados en range607.txt"<<endl;
+
+
+        }  else {
+            cout << "No se encontraron registros en ese rango" << endl;
+        }
+
+
+        cout<<"Deseas realizar otra corrida?"<<endl;
+        cout<<"1. Si"<<endl;
+        cout<<"2. No"<<endl;
+        cin>>continuar;
+
+        
     }
 
-
-
-
+    return 0; 
 
 
     
-
-
-
-
-
-
-    return 0;  
 }
