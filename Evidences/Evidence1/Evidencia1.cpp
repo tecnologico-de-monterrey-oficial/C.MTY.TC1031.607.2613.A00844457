@@ -401,11 +401,21 @@ int main (){
     }
 
     auto tiempoFinal = chrono::high_resolution_clock::now();
-
     auto duracion = chrono::duration_cast<chrono::microseconds>(tiempoFinal - tiempoInicial);
-    cout<<"Tiempo de duración: "<<duracion.count()<<" microsegundos"<<endl;
+
     cout << "Algoritmo: " << tipoAlgoritmo << endl;
     cout << "Complejidad: " << complejidad << endl;
+    cout<<"Tiempo de duración: "<<duracion.count()<<" microsegundos"<<endl;
+
+    // --------------------Archivo final ------------------------
+
+    ofstream archivoFinal("output607.txt");
+    archivoFinal<<"Algoritmo: "<<tipoAlgoritmo<<endl;
+    archivoFinal << "Complejidad: " << complejidad << endl;
+    archivoFinal<<"Tiempo de duración: "<<duracion.count()<<" microsegundos"<<endl;
+    archivoFinal<<"Total de registros: "<<copia.size()<<endl;
+
+
 
 
 
