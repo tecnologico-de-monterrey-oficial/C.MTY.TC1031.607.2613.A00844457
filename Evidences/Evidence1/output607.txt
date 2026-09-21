@@ -1,0 +1,4 @@
+Algoritmo:  Quick Sort
+Complejidad: O(nlog n) promedio, O(n^2) peor caso
+Tiempo de duración: 2590072 microsegundos
+Total de registros: 6818

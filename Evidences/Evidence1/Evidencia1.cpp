@@ -299,6 +299,52 @@ void swapSort(vector<Registro>& registros){
     }
 }
 
+// --------------Busqueda Binaria -------------------------
+int buscarInicio(vector<Registro>& registros, Registro fechaInicial){
+    int left = 0;
+    int right = registros.size() -1;
+    int resultados = registros.size();
+
+    while (left<=right){
+        int mid = (left + right)/2;
+
+        if(!compFechas(registros[mid], fechaInicial)){
+         resultados = mid;
+            right = mid -1;
+        
+        }else{
+            left = mid +1;
+        }
+    }
+
+    return resultados;
+
+    
+}
+
+
+int busquedaFinal(vector<Registro>& registros, Registro fechaFinal){
+    int left = 0;
+    int right = registros.size() -1;
+    int resultados = -1;
+
+    while (left<=right){
+        int mid = (left + right)/2;
+
+        if(!compFechas(fechaFinal, registros[mid])){
+         resultados = mid;
+            left = mid + 1;
+        
+        }else{
+            right = mid - 1;
+        }
+    }
+
+    return resultados;
+
+}
+
+
 
 
 
@@ -414,6 +460,39 @@ int main (){
     archivoFinal << "Complejidad: " << complejidad << endl;
     archivoFinal<<"Tiempo de duración: "<<duracion.count()<<" microsegundos"<<endl;
     archivoFinal<<"Total de registros: "<<copia.size()<<endl;
+
+    //Registros
+    Registro fechaIncial;
+    Registro fechaFinal;
+
+    cout<<"Fecha inicial (Mes, Dia, Anno, Hora): ";
+    cin>>fechaIncial.mes>>fechaIncial.dia>>fechaIncial.anno>>fechaIncial.hora;
+
+    cout<<"Fecha final (Mes, Dia, Anno, Hora): ";
+    cin>>fechaFinal.mes>>fechaFinal.dia>>fechaFinal.anno>>fechaFinal.hora;
+
+    int posicionIncio = buscarInicio(copia, fechaIncial);
+    int posicionFinal = busquedaFinal(copia, fechaFinal);
+
+    // ARchivo Rage
+
+    if (posicionIncio<= posicionFinal){
+
+        ofstream resultados("range607.txt");
+
+        for(int i = posicionIncio; i<=posicionFinal; i++){
+            resultados <<copia[i].mes<< " "<<copia[i].dia<< " "
+            <<copia[i].anno<< " "<<copia[i].hora<< " "
+            <<copia[i].ip<<copia[i].contenido<<endl;
+        }
+
+        cout<< "Los resultados fueron guardados en range607.txt"<<endl;
+
+
+    }  else {
+        cout << "No se encontraron registros en ese rango" << endl;
+    }
+
 
 
 
