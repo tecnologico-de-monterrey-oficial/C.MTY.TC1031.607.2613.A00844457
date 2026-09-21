@@ -1,14 +1,18 @@
-Oct 9 2024 02:14:04 10.14.124.30 Encryption Failures
-Oct 9 2024 02:39:39 10.14.90.25 Broken authentication and session management
-Oct 9 2024 06:46:20 10.14.237.229 Social engineering attacks
-Oct 9 2024 08:49:26 10.14.172.36 Anomalous User Activity
-Oct 9 2024 11:41:59 10.14.237.20 Security breaches
-Oct 9 2024 11:52:29 10.14.171.34 Human error
-Oct 9 2024 12:52:10 10.14.129.44 Broken authentication and session management
-Oct 9 2024 13:02:03 10.14.116.235 Weak or easily guessable passwords
-Oct 9 2024 13:12:07 10.14.177.40 Application error
-Oct 9 2024 13:27:23 10.14.77.49 Encryption Failures
-Oct 9 2024 14:12:37 10.14.63.252 Changes in File Integrity
-Oct 9 2024 15:41:15 10.14.17.154 Data Exfiltration Attempts
-Oct 9 2024 15:57:40 10.14.174.174 Anomalous User Activity
-Oct 9 2024 16:18:33 10.14.118.14 Configuration errors
+Sep 8 2024 00:22:43 10.14.168.155 Unencrypted communication
+Sep 8 2024 04:37:37 10.14.248.79 Configuration errors
+Sep 8 2024 04:44:15 10.14.135.12 Application error
+Sep 8 2024 05:50:57 10.14.22.235 Changes in File Integrity
+Sep 8 2024 10:42:42 10.14.40.195 Data corruption
+Sep 8 2024 10:47:52 10.14.24.223 Data corruption
+Sep 8 2024 15:23:16 10.14.206.243 Weak or easily guessable passwords
+Sep 8 2024 15:25:34 10.14.220.55 Broken authentication and session management
+Sep 9 2024 01:51:20 10.14.27.106 Application error
+Sep 9 2024 04:53:57 10.14.96.200 Suspicious IP Addresses
+Sep 9 2024 07:53:44 10.14.230.164 Data Exfiltration Attempts
+Sep 9 2024 15:18:08 10.14.182.26 Suspicious IP Addresses
+Sep 9 2024 18:59:55 10.14.132.80 Failed Login Attempts
+Sep 9 2024 19:17:57 10.14.186.180 Cross-Site Scripting
+Sep 10 2024 09:16:12 10.14.245.197 Suspicious IP Addresses
+Sep 10 2024 13:50:52 10.14.99.247 Anomalous User Activity
+Sep 10 2024 18:14:07 10.14.153.89 Anomalous User Activity
+Sep 10 2024 21:18:36 10.14.183.213 Data Exfiltration Attempts

@@ -1,5 +1,5 @@
 Allison Charlize Arriaza Chacchagua
-A0084447
+A00844457
 
 ¿Qué algoritmos lograste implementar con mayor facilidad gracias al apoyo de Copilot?
 
