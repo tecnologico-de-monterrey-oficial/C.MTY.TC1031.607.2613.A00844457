@@ -4,6 +4,9 @@
 #include <stdexcept>
 #include "Node.h"
 
+using namespace std;
+
+
 template <typename T>
 class LinkedList {
 private:
@@ -23,7 +26,7 @@ public:
     T getData(int index);
     void updateData(T oldData, T newData);
     void updateAt(int index, T data);
-    int finData(T data);
+    int findData(T data);
 
     T& operator [](int index);
     LinkedList<T>& operator=(const LinkedList<T>& lista);
@@ -36,6 +39,7 @@ void LinkedList<T>::push_front(T data) {
     Node<T>* node = new Node<T>(data);
     node->next = head;
     head = node;
+    size++;
 }
 
 template <typename T>
@@ -82,7 +86,7 @@ void LinkedList<T>::insert(int index, T data) {
 
 template <typename T>
 void LinkedList<T>::deleteData(T data) {
-    // Primero verificamos que la lista no esté vacía
+    // verficar que no este vacia
     if (head != nullptr) {
 
         // Caso en el que el dato está al inicio
@@ -97,7 +101,7 @@ void LinkedList<T>::deleteData(T data) {
             Node<T>* auxPrev = head;
             Node<T>* aux = head->next;
 
-            // Buscamos el dato en el resto de la lista
+            // Buscrel dato en el resto de la lista
             while (aux != nullptr) {
 
                 if (aux->data == data) {
@@ -140,7 +144,7 @@ void LinkedList<T>::print() {
 template <typename T>
 void LinkedList<T>:: deleteAt(int index){
     if (index < 0 || index>= size){
-        throw out_of_range(" La posición no existe en la lista")
+        throw out_of_range(" La posición no existe en la lista");
     }
 
 
@@ -170,7 +174,7 @@ void LinkedList<T>:: deleteAt(int index){
 }
 
 template <typename T>
-void LinkedList<T>:: getData(int index){
+T LinkedList<T>:: getData(int index){
     // validar  que la posicion exista
     if (index < 0 || index >= size) {
         throw out_of_range("La posicion no existe en la lista");
@@ -221,7 +225,7 @@ void LinkedList<T>:: updateAt(int index, T data){
 }
 
 template <typename T>
-void LinkedList<T>::finData(T data){
+int LinkedList<T>::findData(T data){
     Node<T>* aux = head;
     int index = 0;
 
@@ -258,6 +262,10 @@ T& LinkedList<T>::operator[](int index) {
 
 template <typename T>
 LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T>& lista) {
+    if (this == &lista) {
+        return *this;
+    }
+
     while (head != nullptr) {
         Node<T>* aux = head;
         head = head->next;
@@ -275,7 +283,6 @@ LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T>& lista) {
 
     return *this;
 }
-
 
 
 
