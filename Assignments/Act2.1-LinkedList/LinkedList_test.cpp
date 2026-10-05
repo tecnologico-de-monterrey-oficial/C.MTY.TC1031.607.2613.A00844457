@@ -10,8 +10,6 @@ int main() {
     list.push_back("@");
     list.push_back("&");
     list.print();
-    list.insert(int index, T data);
-    list.delete()
 
 
     return 0;
