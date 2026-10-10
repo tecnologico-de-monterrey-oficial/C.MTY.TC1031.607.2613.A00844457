@@ -10,6 +10,7 @@ using namespace std;
 
 
 int main(){
+    
     DoublyLinkedList<int> lista;
     DoublyLinkedList<int> lista2;
 
@@ -175,9 +176,11 @@ int main(){
             }
 
         } else if(opcion == 10){
+
             cout<<"1. Consultar"<<endl;
             cout<<"2. Modificar"<<endl;
             cout<<"Opcion: ";
+
             cin>>tipo;
 
             cout<<"Indice: ";
@@ -201,7 +204,9 @@ int main(){
                 cout<<" Indice invalido"<<endl;
             }
 
+
         } else if(opcion == 11){
+
             lista2 = lista;
             cout<<"Lista copiada "<<endl;
 
@@ -214,6 +219,7 @@ int main(){
             lista.sort();
             cout<<"Lista ordenada"<<endl;
 
+
         } else if(opcion == 14){
             lista.duplicate();
             cout<<"Elementos duplicados "<<endl;
@@ -225,6 +231,7 @@ int main(){
 
         } else if(opcion == 16){
             cout<<"Lista: ";
+
 
             for(int i = 0; i < lista.getSize(); i++){
                 cout<<lista[i]<<" ";
@@ -241,6 +248,8 @@ int main(){
 
 
     }
+
+
 
     return 0;
 }

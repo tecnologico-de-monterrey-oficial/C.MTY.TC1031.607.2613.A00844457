@@ -421,6 +421,7 @@ void DoublyLinkedList<T>::sort(){
 }
 
 
+
 template <typename T>
 void DoublyLinkedList<T>::duplicate(){
     NodeD<T>* aux = head;
@@ -511,6 +512,7 @@ DoublyLinkedList<T>& DoublyLinkedList<T>::operator=(const DoublyLinkedList<T>& l
 
     return *this;
 }
+
 
 
 
