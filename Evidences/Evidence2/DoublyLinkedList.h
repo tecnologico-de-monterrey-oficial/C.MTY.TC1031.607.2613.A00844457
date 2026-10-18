@@ -1,0 +1,520 @@
+//Allison Charlize Arriaza Chachagua
+//A00844457
+#ifndef DoublyLinkedList_h
+#define DoublyLinkedList_h
+
+#include "NodeD.h"
+#include <stdexcept>
+
+using namespace std;
+
+template <typename T>
+class DoublyLinkedList {
+private:
+    NodeD<T>* head;
+    NodeD<T>* tail;
+    int size = 0;
+public:
+    DoublyLinkedList() : head(nullptr), tail(nullptr), size(0) {}
+
+    int getSize(){
+        return size;
+
+    }
+
+    void addFirst(T data);
+    void addLast(T data);
+    void insert(int index, T data);
+    bool deleteAt(int index);
+    int findData(T data);
+    bool deleteData(T data);
+    T getData(int index);
+    void updateData(T data, T newData);
+    void updateAt(int index, T data);
+    void clear();
+    void sort();
+    void duplicate();
+    void removeDuplicates();
+
+    T& operator[](int index);
+    DoublyLinkedList<T>& operator=(const DoublyLinkedList<T>& lista);
+};
+
+template <typename T>
+void DoublyLinkedList<T>::addFirst(T data) {
+    // validarsi la lista está vacía
+    if (head == nullptr) {
+        // si está vacía la lista
+        // apunto head a un nuevo nodo con data
+        head = new NodeD<T>(data);
+        tail = head;
+        size++;
+    } else {
+        // la lista no está vacía
+        NodeD<T>* aux = new NodeD<T>(data);
+        // apuntamos el next de aux a head
+        aux->next = head;
+        head->prev = aux;
+        head = aux;
+        size++;
+    }
+}
+
+
+template <typename T>
+void DoublyLinkedList<T>::addLast(T data) {
+    // validamos si la lista está vacía
+    if (head == nullptr) {
+        head = new NodeD<T>(data);
+        tail = head;
+        size++;
+    } else {
+        // la lista no está vacía
+        NodeD<T>* aux = new NodeD<T>(data);
+        aux->prev = tail;
+        tail->next = aux;
+        tail = aux;
+        size++;
+
+    }
+
+
+}
+
+template <typename T>
+void DoublyLinkedList<T>::insert(int index, T data) {
+    if (index >= 0 && index <= size-1) {
+        if (index != size-1) {
+            // el index es desde 0 hasta el penúltimo (en medio)
+            // creamos un indice auxiliar igual a 0
+            int auxIndex = 0;
+            NodeD<T>* aux = head;
+            while (auxIndex < index) {
+                aux = aux->next;
+                auxIndex++;
+            }
+
+
+            NodeD<T>* auxNew = new NodeD<T>(data);
+            auxNew->prev = aux;
+            auxNew->next = aux->next;
+            aux->next->prev = auxNew;
+            aux->next = auxNew;
+            size++;
+
+        } else {
+            // el index es igual a size -1
+            NodeD<T>* aux = new NodeD<T>(data);
+            aux->prev = tail;
+            tail->next = aux;
+            tail = aux;
+            size++;
+        }
+     
+        
+    } else {
+        throw out_of_range("Índice inválido");
+ 
+ 
+    }
+}
+
+
+template <typename T>
+bool DoublyLinkedList<T>::deleteAt(int index){
+    if (index >= 0 && index<size){
+         // solo existe un elemento
+        if (head-> next == nullptr){
+            // nodo auxiliar para no perder el elemento
+            NodeD<T>* aux = head;
+            head= nullptr;
+            tail = nullptr;
+            delete aux;
+
+            size--;
+            return true;
+
+        } else {
+            if(index==0){
+                NodeD<T>* aux = head;
+                head = head->next;
+                head->prev = nullptr;
+
+                delete aux;
+                size --;
+                return true;
+
+            } else{
+                if(index == size -1){
+                    //borrar el ultimo elemento
+                    NodeD<T>* aux = tail;
+                    tail = tail->prev;
+                    tail->next = nullptr;
+
+                    delete aux;
+                    size --;
+                    return true;
+
+                } else{
+                    //borrar elemento de posicion de el medio
+                    if(index <= (size -1)/2 ){
+
+                        int auxIndex = 1;
+                        NodeD<T>* aux = head-> next;
+                        while(auxIndex<index){
+                            aux = aux->next;
+                            auxIndex ++;
+
+                        }
+                        // ya se llego al nodo deseado
+                        // NodeD
+                        aux->prev->next = aux-> next;
+                        aux->next->prev = aux->prev;
+
+                        delete aux;
+                        size --;
+                        return true;
+
+                    } else{
+                        int auxIndex = size -2;
+                        NodeD<T>* aux = tail-> prev;
+                        while(index<auxIndex){
+                            aux = aux->prev;
+                            auxIndex --;
+
+                        }
+
+                        // ya se llego al nodo deseado
+                        // NodeD
+                        aux->prev->next = aux-> next;
+                        aux->next->prev = aux->prev;
+
+                        delete aux;
+                        size--;
+                        return true;
+
+
+                    }
+
+                }
+
+            }
+        }
+
+    } else {
+
+        return false;
+    }
+}
+
+template <typename T>
+int DoublyLinkedList<T>::findData(T data){
+    int auxIndex =0;
+
+    NodeD<T>* aux = head;
+    while(auxIndex<size){
+        if(aux->data == data){
+            return auxIndex;
+        }
+
+        auxIndex++;
+        aux = aux->next;
+    }
+    return -1;
+
+
+}
+
+template <typename T>
+bool DoublyLinkedList<T>:: deleteData(T data){
+    // find data
+    int auxIndex =0;
+
+    NodeD<T>* aux = head;
+    while(auxIndex<size){
+        if(aux->data == data){
+            //Encontrado! se borra
+            //---------------------
+            // un solo elemento
+            if (head == tail){
+                head= nullptr;
+                tail = nullptr;
+                delete aux;
+
+                size--;
+                return true;
+
+            } else {
+                // borrar head
+                if (aux == head){ // data = head;
+                    head = head->next;
+                    head->prev = nullptr;
+
+
+                    delete aux;
+                    size --;
+                    return true;
+
+
+                } else {
+                    if (aux == tail){
+
+                        tail = tail->prev;
+                        tail->next = nullptr;
+
+                        delete aux;
+                        size --;
+                        return true;
+
+                    } else {
+                        aux->prev->next = aux-> next;
+                        aux->next->prev = aux->prev;
+
+                        delete aux;
+                        size --;
+                        return true;
+
+
+                        
+                    }
+
+                }
+         
+         
+            }
+
+        }
+        auxIndex++;
+        aux = aux->next;
+    }
+    return false;
+}
+
+template <typename T>
+T DoublyLinkedList<T>::getData(int index){
+    if(index>=0 && index < size){
+        // desde head
+        NodeD<T>* aux = head;
+        int auxIndex = 0;
+
+        if (index <= (size - 1)/2){
+            aux = head;
+            auxIndex = 0;
+
+            while (auxIndex<index){
+                aux = aux-> next;
+                auxIndex ++;
+
+            }
+
+
+        } else {
+            aux = tail;
+            auxIndex = size -1;
+
+            while (auxIndex>index){
+                aux = aux-> prev;
+                auxIndex --;
+            }
+
+        }
+        return aux -> data;
+
+        
+
+    } else {
+        throw out_of_range("Indice invalido");
+    }
+
+}
+
+template <typename T>
+void DoublyLinkedList<T>::updateAt(int index, T data){
+    if(index >= 0 && index < size){
+        
+        NodeD<T>* aux;
+        int auxIndex;
+
+        if(index <= (size - 1)/2){
+            aux = head;
+            auxIndex = 0;
+            while(auxIndex < index){
+                aux = aux->next;
+                auxIndex++;
+            }
+
+
+        } else {
+            aux = tail;
+            auxIndex = size - 1;
+
+            while(auxIndex > index){
+                aux = aux->prev;
+                auxIndex--;
+            }
+        }
+
+        aux->data = data;
+
+
+    } else {
+        throw out_of_range("Índice inválido");
+ 
+    }
+}
+
+template <typename T>
+void DoublyLinkedList<T>::updateData (T data, T newData){
+    int auxIndex = 0;
+    NodeD<T>* aux = head;
+
+    while(auxIndex < size){
+        if(aux->data == data){
+            aux->data = newData;
+            return;
+            
+        }
+
+        auxIndex++;
+        aux = aux->next;
+
+    }
+    throw out_of_range("Dato no encontrado");
+}
+
+template <typename T>
+void DoublyLinkedList<T>::clear(){
+    NodeD<T>* aux = head;
+
+    while(aux != nullptr){
+
+        head = head->next;
+        delete aux;
+        aux = head;
+    }
+
+    head = nullptr;
+    tail = nullptr;
+    size = 0;
+}
+
+template <typename T>
+void DoublyLinkedList<T>::sort(){
+    NodeD<T>* aux;
+    NodeD<T>* aux2;
+
+    for(int i = 0; i < size - 1; i++){
+        aux = head;
+
+        for(int j = 0; j < size - i - 1; j++){
+            aux2 = aux->next;
+
+            if(aux->data > aux2->data){
+                T temp = aux->data;
+                aux->data = aux2->data;
+                aux2->data = temp;
+            }
+
+            aux = aux->next;
+        }
+    }
+}
+
+
+
+template <typename T>
+void DoublyLinkedList<T>::duplicate(){
+    NodeD<T>* aux = head;
+
+    while(aux != nullptr){
+        NodeD<T>* aux2 = new NodeD<T>(aux->data);
+        aux2->next = aux->next;
+        aux2->prev = aux;
+
+        if(aux->next != nullptr){
+            aux->next->prev = aux2;
+
+        } else {
+            tail = aux2;
+        }
+
+        aux->next = aux2;
+        size++;
+        aux = aux2->next;
+
+    }
+}
+
+template <typename T>
+void DoublyLinkedList<T>::removeDuplicates(){
+    sort();
+
+    NodeD<T>* aux = head;
+
+    while(aux != nullptr && aux->next != nullptr){
+        NodeD<T>* aux2 = aux->next;
+
+        if(aux->data == aux2->data){
+            aux->next = aux2->next;
+
+            if(aux2 == tail){
+                tail = aux;
+            } else {
+                aux2->next->prev = aux;
+            }
+
+            delete aux2;
+            size--;
+
+        } else {
+            aux = aux->next;
+        }
+    }
+}
+
+
+
+
+template <typename T>
+T& DoublyLinkedList<T>::operator[](int index){
+    int auxIndex = 0;
+
+    NodeD<T>* aux = head;
+    while(auxIndex < size){
+        if(auxIndex == index){
+            return aux->data;
+
+        }
+
+
+        aux = aux->next;
+        auxIndex++;
+    }
+    throw out_of_range("Indice invalido");
+
+
+}
+
+template <typename T>
+DoublyLinkedList<T>& DoublyLinkedList<T>::operator=(const DoublyLinkedList<T>& lista){
+    if(this == &lista){
+
+        return *this;
+    }
+    clear();
+
+    NodeD<T>* aux = lista.head;
+    while(aux != nullptr){
+        addLast(aux->data);
+        aux = aux->next;
+
+    }
+
+    return *this;
+}
+
+
+
+
+
+#endif /* DoublyLinkedList_h */
