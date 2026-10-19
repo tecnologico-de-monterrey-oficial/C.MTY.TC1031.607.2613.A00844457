@@ -50,7 +50,6 @@ int main(){
         abrirArchivo>> registro.anno;
         abrirArchivo>> registro.hora;
         abrirArchivo>> registro.ip;
-        abrirArchivo>> registro.mensaje;
 
         if (!abrirArchivo){
             break;
@@ -81,9 +80,29 @@ int main(){
         <<aux.hora<<" "<<aux.ip<<endl;
     }
 
-    for(int i = 0; i<5 && i<lista.getSize(); i++){
+
+    string buscarMes;
+    int buscarFecha;
+    int buscarAnno;
+    int encontrado = 0;
+
+    cout<< "Mes a buscar: ";
+    cin>>buscarMes;
+    cout<<"Buscar fecha: ";
+    cin>>buscarFecha;
+    cout<< "Buscar Año: ";
+    cin>>buscarAnno;
+
+    for (int i =0; i<lista.getSize(); i++){
         Log aux = lista.getData(i);
+
+        if(aux.mes == buscarMes && aux.fecha == buscarFecha && aux.anno == buscarAnno){
+            cout<<aux.mes<<" "<<aux.fecha<<" "<<aux.anno<<" "<<aux.hora<<" "<<aux.ip<<" "<<aux.mensaje<<endl;
+            encontrado ++;
+        }
     }
+
+    cout<<"Registros encontrados: "<< encontrado<< endl;
 
 
     return 0;
