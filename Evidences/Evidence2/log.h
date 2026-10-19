@@ -2,11 +2,11 @@
 //A00844457
 
 #ifndef Log_h
-#define log_h
+#define Log_h
 #include <string>
 using namespace std;
 
-struct log{
+struct Log{
     string mes;
     int fecha;
     int anno;
@@ -14,7 +14,7 @@ struct log{
     string ip;
     string mensaje;
 
-    
+
 
 };
 
