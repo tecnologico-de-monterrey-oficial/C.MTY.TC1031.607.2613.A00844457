@@ -14,6 +14,10 @@ private:
     NodeD<T>* head;
     NodeD<T>* tail;
     int size = 0;
+
+    NodeD<T>* mitad(NodeD<T>* inicio);
+    NodeD<T>* merge(NodeD<T>* left, NodeD<T>* right);
+    NodeD<T>* mergeSort(NodeD<T>* inicio);
 public:
     DoublyLinkedList() : head(nullptr), tail(nullptr), size(0) {}
 
@@ -35,6 +39,7 @@ public:
     void sort();
     void duplicate();
     void removeDuplicates();
+    void ordenarLogs();
 
     T& operator[](int index);
     DoublyLinkedList<T>& operator=(const DoublyLinkedList<T>& lista);
@@ -513,6 +518,79 @@ DoublyLinkedList<T>& DoublyLinkedList<T>::operator=(const DoublyLinkedList<T>& l
     return *this;
 }
 
+template <typename T>
+NodeD<T>* DoublyLinkedList<T>:: mitad(NodeD<T>* inicio){
+    NodeD<T>* aux = inicio;
+    NodeD<T>* aux2 = inicio->next;
+
+    while(aux2 != nullptr && aux2->next != nullptr){
+        aux = aux->next; // Avanza 1 nodo
+        aux2 = aux2-> next-> next; // avanza 2 nodos
+    }
+    return aux;
+}
+
+template <typename T>
+NodeD<T>* DoublyLinkedList<T>:: merge(NodeD<T>* left, NodeD<T>* right){  
+    
+    if(left == nullptr){
+    return right;
+    } else if (right == nullptr){
+        return left;
+    } 
+    
+
+
+    NodeD<T>* aux;
+
+    if(compararFecha(left-> data, right-> data)){
+        aux = left;
+        aux->next = merge(left-> next, right);
+    } else {
+        aux = right;
+        aux -> next = merge(left, right-> next);
+    }
+
+    if(aux-> next != nullptr){
+        aux->next-> prev = aux;
+    }
+
+    aux-> prev = nullptr;
+    return aux;
+
+
+
+}
+
+template <typename T>
+NodeD<T>* DoublyLinkedList<T>:: mergeSort(NodeD<T>* inicio){
+    
+    if(inicio == nullptr || inicio -> next == nullptr){
+        return inicio;
+    }
+
+    NodeD<T>* aux = mitad(inicio);
+    NodeD<T>* right = aux-> next;
+
+    aux-> next = nullptr;
+    right -> prev = nullptr;
+
+    NodeD<T>* left = mergeSort(inicio);
+    right = mergeSort(right);
+
+    return merge(left, right);
+} 
+
+template <typename T>
+void DoublyLinkedList<T>:: ordenarLogs(){
+    head = mergeSort(head);
+    tail = head;
+
+    while (tail != nullptr && tail->next != nullptr){
+        tail = tail-> next;
+    }
+
+}
 
 
 

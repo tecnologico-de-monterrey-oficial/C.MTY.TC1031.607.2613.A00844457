@@ -67,9 +67,24 @@ int main(){
         datos.pop();
     }
 
+
     cout<<"Total de registros: "<<cont<<endl;
-    cout<<"Logs en restantes: "<<datos.getsize()<<endl;
     cout<<"Logs en lista: "<<lista.getSize()<<endl;
+
+    lista.ordenarLogs();
+    cout<<"Logs ordenados: "<<lista.getSize()<<endl;
+
+    for(int i = 0; i < 5 && i < lista.getSize(); i++){
+        Log aux = lista.getData(i);
+
+        cout<<aux.mes<<" "<<aux.fecha<<" "<<aux.anno<<" "
+        <<aux.hora<<" "<<aux.ip<<endl;
+    }
+
+    for(int i = 0; i<5 && i<lista.getSize(); i++){
+        Log aux = lista.getData(i);
+    }
+
 
     return 0;
 }

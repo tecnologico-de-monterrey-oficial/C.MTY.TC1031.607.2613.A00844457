@@ -34,13 +34,13 @@ int numerosMeses(string mes){
     return 0;
 }
 
-bool compararFecha(log a, log b){
+bool compararFecha(Log a, Log b){
     if (a.anno != b.anno){
         return a.anno < b.anno;
     }
 
     if(numerosMeses(a.mes) != numerosMeses(b.mes)){
-        return a.mes < b.mes;
+        return numerosMeses(a.mes) < numerosMeses(b.mes);
     }
 
     if(a.fecha != b.fecha){
