@@ -5,9 +5,11 @@
 #include <string>
 #include <fstream>
 #include <chrono>
+#include <map>
 #include "log.h"
 #include "Queue.h"
 #include "DoublyLinkedList.h"
+#include "Stack.h"
 using namespace std;
 
 
@@ -76,6 +78,9 @@ int main(){
     int buscarFecha;
     int buscarAnno;
     int encontrado = 0;
+    bool buscandoFecha = true;
+
+
 
     while (opcion != 5){
         cout<<"===============MENU================"<<endl;
@@ -136,6 +141,8 @@ int main(){
                     cout<< "Buscar Año: ";
                     cin>>buscarAnno;
 
+                    buscandoFecha = true;
+
                     for (int i =0; i<lista.getSize(); i++){
                         Log aux = lista.getData(i);
 
@@ -144,18 +151,88 @@ int main(){
                             encontrado ++;
                         }
                     }
-
-                    if(encontrado ==0){
+                    if(encontrado == 0){
                         cout<<"No se encontraron los registros"<<endl;
 
-                    } else{
+                    }else{
                         cout<<"Registros encontrados: "<<encontrado<<endl;
                     }
+
+                    
             }    
         }  else if(opcion == 3){
-            cout<<"Pendiente: mostrar logs en orden descendente"<<endl;
+            if(ordenado == false){
+                cout<<"Primero se deben de ordenar los archivos"<<endl;
+            } else{
+                Stack<Log> pila;
+                
+                if(buscarFecha == false){
+                    cout<<"Mes: ";
+                    cin>> buscarMes;
+                    cout<< "Dia: ";
+                    cin>>buscarFecha;
+                    cout<<"Anno: ";
+                    cin>>buscarAnno;
+
+                }
+                
+
+                buscandoFecha = true;
+
+                for (int i=0; i<lista.getSize();i++ ){
+                    Log aux = lista.getData(i);
+
+                    if(aux.mes == buscarMes && aux.fecha == buscarFecha && aux.anno == buscarAnno){
+                        pila.push(aux);
+                    }
+
+                }
+
+                int encontrado = pila.getSize();
+                while(pila.getSize()>0){
+                    Log aux = pila.pop();
+                    cout<<aux.mes<<" "<<aux.fecha<<" "<<aux.anno<<" "<<aux.hora<<" "<<aux.ip<<" "<<aux.mensaje<<endl;
+                    
+                }
+
+                cout<<"Registros encontrados: "<<encontrado<<endl;
+
+
+
+            }
         }  else if(opcion ==4){
-            cout<<"Pendiente: estadisticas"<<endl;
+            map<string, int> fechas;
+            map<string, int> mensajes;
+            map<string, int> ips;
+
+            cout<<"Total de registros: "<<lista.getSize()<<endl;
+
+            for(int i =0; i>lista.getSize(); i++){
+                Log aux = lista.getData(i);
+
+                string fecha = aux.mes + " " + to_string(aux.fecha) + " " + to_string(aux.anno);
+
+                fechas[fecha]++;
+                mensajes[aux.mensaje]++;
+                ips[aux.ip]++;
+            }
+
+            int fechaMax = 0;
+            for(auto dato: fechas){
+                if(dato.second > fechaMax){
+                    fechaMax = dato.second;
+
+                }
+            }
+
+            cout<<"Fecha con mas incidentes: "<<endl;
+            for(auto dato: fechas){
+                if(dato.second == fechaMax){
+                    cout<<dato.first<<"-"<<dato.second<<" registros"<<endl;
+                }
+            }
+
+
         }   else if(opcion ==5){
             cout<<"Fin del programa"<<endl;
         } else{
