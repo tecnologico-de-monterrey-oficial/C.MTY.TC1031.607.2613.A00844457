@@ -11,10 +11,15 @@ template <typename T>
 class LinkedList {
 private:
     Node<T>* head;
+    // AGregar tail para que sea O(1)
+    Node<T>* tail;
     int size;
 
 public:
-    LinkedList() : head(nullptr), size(0) {}
+    LinkedList() : head(nullptr), tail(nullptr), size(0) {}
+    int getSize(){
+        return size;
+    }
 
     // operaciones
     void push_front(T data);
@@ -37,6 +42,9 @@ template <typename T>
 void LinkedList<T>::push_front(T data) {
     // Creamos el nuevo nodo y lo colocamos al inicio
     Node<T>* node = new Node<T>(data);
+    if(head == nullptr){
+        tail = node;
+    }
     node->next = head;
     head = node;
     size++;
@@ -44,21 +52,19 @@ void LinkedList<T>::push_front(T data) {
 
 template <typename T>
 void LinkedList<T>::push_back(T data) {
-    // Si la lista tiene elementos, recorremos hasta el final
-    if (head != nullptr) {
-        Node<T>* aux = head;
+        Node<T>* aux = new Node<T>(data);
+        // se crea el nodo que va a agregar
+        if(head == nullptr){
+            // lista vacia, head y tail apuntan al mismo nodo
+            head = aux;
+            tail = aux;
+        
+        } else{
+            // Se agrega el nodo del final
+            tail -> next = aux;
+            tail = aux;
 
-        while (aux->next != nullptr) {
-            aux = aux->next;
         }
-
-        aux->next = new Node<T>(data);
-
-    } else {
-        // Si está vacía, el nuevo nodo se convierte en head
-        head = new Node<T>(data);
-    }
-
     size++;
 }
 
@@ -77,6 +83,9 @@ void LinkedList<T>::insert(int index, T data) {
 
         // Insertamos el nodo después de la posición encontrada
         aux->next = new Node<T>(data, aux->next);
+        if(aux == tail){
+            tail = aux->next;
+        }
         size++;
 
     } else {
@@ -94,8 +103,13 @@ void LinkedList<T>::deleteData(T data) {
             Node<T>* aux = head;
             head = head->next;
 
+            if(head == nullptr){
+                tail = nullptr;
+            }
+
             delete aux;
             size--;
+            return;
 
         } else {
             Node<T>* auxPrev = head;
@@ -106,6 +120,10 @@ void LinkedList<T>::deleteData(T data) {
 
                 if (aux->data == data) {
                     auxPrev->next = aux->next;
+
+                    if(aux == tail){
+                        tail = auxPrev;
+                    }
 
                     delete aux;
                     size--;
@@ -147,14 +165,23 @@ void LinkedList<T>:: deleteAt(int index){
         throw out_of_range(" La posición no existe en la lista");
     }
 
+    
+
 
     if(index ==0){
         Node<T>* aux = head;
         head = head->next;
+
+        if(head == nullptr){
+            tail = nullptr;
+        }
+
         delete aux;
         size--;
         return;
     }
+
+    
 
     
     Node<T>* auxPrev = head;
@@ -168,6 +195,9 @@ void LinkedList<T>:: deleteAt(int index){
     }
 
     auxPrev->next = aux->next;
+    if(aux == tail){
+        tail = auxPrev;
+    }
     delete aux;
     size--;
 
@@ -273,7 +303,7 @@ LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T>& lista) {
     }
 
     size = 0;
-
+    tail = nullptr;
     Node<T>* aux = lista.head;
 
     while (aux != nullptr) {
