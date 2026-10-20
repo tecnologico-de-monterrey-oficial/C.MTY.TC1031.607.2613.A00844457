@@ -11,7 +11,8 @@ using namespace std;
 
 
 int main(){
-    int opcion;
+    int opcionArchivo;
+    int opcion = 0;
     string nombreArchivo;
 
     cout<<"===============MENU=============================="<<endl;
@@ -19,11 +20,11 @@ int main(){
     cout<<"Para log607-1.txt ingrese 1"<<endl;
     cout<<"Para log607-2.txt ingrese 2"<<endl;
     cout<<"opcion: ";
-    cin>>opcion;
+    cin>>opcionArchivo;
 
-    if(opcion == 1){
+    if(opcionArchivo == 1){
         nombreArchivo = "log607-1.txt";
-    } else if(opcion == 2){
+    } else if(opcionArchivo == 2){
         nombreArchivo = "log607-2.txt";
     } else{
         cout<<"Error intente nuevamente";
@@ -66,43 +67,76 @@ int main(){
         datos.pop();
     }
 
-
     cout<<"Total de registros: "<<cont<<endl;
     cout<<"Logs en lista: "<<lista.getSize()<<endl;
 
-    lista.ordenarLogs();
-    cout<<"Logs ordenados: "<<lista.getSize()<<endl;
-
-    for(int i = 0; i < 5 && i < lista.getSize(); i++){
-        Log aux = lista.getData(i);
-
-        cout<<aux.mes<<" "<<aux.fecha<<" "<<aux.anno<<" "
-        <<aux.hora<<" "<<aux.ip<<endl;
-    }
-
-
+    bool ordenado = false; 
     string buscarMes;
     int buscarFecha;
     int buscarAnno;
     int encontrado = 0;
 
-    cout<< "Mes a buscar: ";
-    cin>>buscarMes;
-    cout<<"Buscar fecha: ";
-    cin>>buscarFecha;
-    cout<< "Buscar Año: ";
-    cin>>buscarAnno;
+    while (opcion != 5){
+        cout<<"===============MENU================"<<endl;
+        cout<<"1. Ordenar por fecha y hora"<<endl;
+        cout<<"2. Buscar logs por dia"<<endl;
+        cout<<"3. Mostrar logs en orden descendente"<<endl;
+        cout<<"4. Estadisticas del archivo"<<endl;
+        cout<<"5. Salir"<<endl;
+        cout<<"Opcion: ";
+        cin>>opcion;
 
-    for (int i =0; i<lista.getSize(); i++){
-        Log aux = lista.getData(i);
+        if(opcion == 1){
+            if(ordenado == true){
+                cout<<"Los registros ya fuero ordenados"<<endl;
+            } else{
+                lista.ordenarLogs();
+                ordenado == true;
+                cout<<"Logs ordenados: "<<lista.getSize()<<endl;
+            }
+        } else if(opcion == 2){
+            if(ordenado == false){
+                cout<<"Primero debes ordenar los logs con la opcion 1"<<endl;
+            } else{
+                    int encontrado = 0;
 
-        if(aux.mes == buscarMes && aux.fecha == buscarFecha && aux.anno == buscarAnno){
-            cout<<aux.mes<<" "<<aux.fecha<<" "<<aux.anno<<" "<<aux.hora<<" "<<aux.ip<<" "<<aux.mensaje<<endl;
-            encontrado ++;
+                    cout<< "Mes a buscar: ";
+                    cin>>buscarMes;
+                    cout<<"Buscar fecha: ";
+                    cin>>buscarFecha;
+                    cout<< "Buscar Año: ";
+                    cin>>buscarAnno;
+
+                    for (int i =0; i<lista.getSize(); i++){
+                        Log aux = lista.getData(i);
+
+                        if(aux.mes == buscarMes && aux.fecha == buscarFecha && aux.anno == buscarAnno){
+                            cout<<aux.mes<<" "<<aux.fecha<<" "<<aux.anno<<" "<<aux.hora<<" "<<aux.ip<<" "<<aux.mensaje<<endl;
+                            encontrado ++;
+                        }
+                    }
+
+                    if(encontrado ==0){
+                        cout<<"No se encontraron los registros"<<endl;
+
+                    } else{
+                        cout<<"Registros encontrados: "<<encontrado<<endl;
+                    }
+            }    
+        }  else if(opcion == 3){
+            cout<<"Pendiente: mostrar logs en orden descendente"<<endl;
+        }  else if(opcion ==4){
+            cout<<"Pendiente: estadisticas"<<endl;
+        }   else if(opcion ==5){
+            cout<<"Fin del programa"<<endl;
+        } else{
+            cout<<"Error, opcion invalida"<<endl;
         }
-    }
+            
+                    
+    } 
+        
 
-    cout<<"Registros encontrados: "<< encontrado<< endl;
 
 
     return 0;
