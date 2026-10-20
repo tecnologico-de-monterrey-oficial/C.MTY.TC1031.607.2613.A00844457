@@ -15,15 +15,29 @@ private:
     NodeD<T>* tail;
     int size = 0;
 
+    int comparaciones =0;
+    int profundidadMax = 0;
+
     NodeD<T>* mitad(NodeD<T>* inicio);
     NodeD<T>* merge(NodeD<T>* left, NodeD<T>* right);
-    NodeD<T>* mergeSort(NodeD<T>* inicio);
+    NodeD<T>* mergeSort(NodeD<T>* inicio, int profundidad);
+
+
+
 public:
     DoublyLinkedList() : head(nullptr), tail(nullptr), size(0) {}
 
     int getSize(){
         return size;
 
+    }
+
+    int getComparaciones(){
+        return comparaciones;
+    }
+
+    int getProfundidadMaxima(){
+        return profundidadMax;
     }
 
     void addFirst(T data);
@@ -43,6 +57,7 @@ public:
 
     T& operator[](int index);
     DoublyLinkedList<T>& operator=(const DoublyLinkedList<T>& lista);
+
 };
 
 template <typename T>
@@ -542,6 +557,7 @@ NodeD<T>* DoublyLinkedList<T>:: merge(NodeD<T>* left, NodeD<T>* right){
 
 
     NodeD<T>* aux;
+    comparaciones ++;
 
     if(compararFecha(left-> data, right-> data)){
         aux = left;
@@ -563,7 +579,10 @@ NodeD<T>* DoublyLinkedList<T>:: merge(NodeD<T>* left, NodeD<T>* right){
 }
 
 template <typename T>
-NodeD<T>* DoublyLinkedList<T>:: mergeSort(NodeD<T>* inicio){
+NodeD<T>* DoublyLinkedList<T>:: mergeSort(NodeD<T>* inicio, int profundidad){
+    if(profundidad > profundidadMax){
+        profundidadMax = profundidad;
+    }
     
     if(inicio == nullptr || inicio -> next == nullptr){
         return inicio;
@@ -575,15 +594,17 @@ NodeD<T>* DoublyLinkedList<T>:: mergeSort(NodeD<T>* inicio){
     aux-> next = nullptr;
     right -> prev = nullptr;
 
-    NodeD<T>* left = mergeSort(inicio);
-    right = mergeSort(right);
+    NodeD<T>* left = mergeSort(inicio, profundidad + 1);
+    right = mergeSort(right, profundidad + 1);
 
     return merge(left, right);
 } 
 
 template <typename T>
 void DoublyLinkedList<T>:: ordenarLogs(){
-    head = mergeSort(head);
+    comparaciones =0;
+    profundidadMax =0;
+    head = mergeSort(head, 1);
     tail = head;
 
     while (tail != nullptr && tail->next != nullptr){
@@ -591,6 +612,8 @@ void DoublyLinkedList<T>:: ordenarLogs(){
     }
 
 }
+
+
 
 
 

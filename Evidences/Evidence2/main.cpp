@@ -93,6 +93,8 @@ int main(){
                 lista.ordenarLogs();
                 ordenado == true;
                 cout<<"Logs ordenados: "<<lista.getSize()<<endl;
+                cout<<"Comparaciones: "<<lista.getComparaciones()<<endl;
+                cout<<"Profundidad maxima: "<<lista.getProfundidadMaxima()<<endl;
             }
         } else if(opcion == 2){
             if(ordenado == false){
