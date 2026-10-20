@@ -3,6 +3,8 @@
 #ifndef DoublyLinkedList_h
 #define DoublyLinkedList_h
 
+#include<fstream>
+#include <string>
 #include "NodeD.h"
 #include <stdexcept>
 
@@ -40,6 +42,7 @@ public:
         return profundidadMax;
     }
 
+    
     void addFirst(T data);
     void addLast(T data);
     void insert(int index, T data);
@@ -54,6 +57,8 @@ public:
     void duplicate();
     void removeDuplicates();
     void ordenarLogs();
+
+    void generarArchivo(string archivoOutput);
 
     T& operator[](int index);
     DoublyLinkedList<T>& operator=(const DoublyLinkedList<T>& lista);
@@ -612,6 +617,25 @@ void DoublyLinkedList<T>:: ordenarLogs(){
     }
 
 }
+
+template<typename T>
+void DoublyLinkedList<T>:: generarArchivo(string archivoOutput){
+    ofstream archivo(archivoOutput);
+
+    if(!archivo.is_open()){
+        cout<<"No se pudo crear el archivo"<<endl;
+        return;
+    }
+    NodeD<T>* aux = head;
+
+    while(aux != nullptr){
+        archivo<<aux->data.mes<<" "<<aux->data.fecha<<" "<<aux->data.anno<<" "<<aux->data.hora<<" "<<aux->data.ip <<aux->data.mensaje<<endl;
+        aux = aux->next;
+    }
+
+    archivo.close();
+}
+
 
 
 

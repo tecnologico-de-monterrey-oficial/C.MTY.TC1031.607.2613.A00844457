@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <chrono>
 #include "log.h"
 #include "Queue.h"
 #include "DoublyLinkedList.h"
@@ -90,11 +91,37 @@ int main(){
             if(ordenado == true){
                 cout<<"Los registros ya fuero ordenados"<<endl;
             } else{
+                int prediccion;
+                cout<<"Que crecimiento esperas en las comparaciones?"<<endl;
+                cout<<"1. n log n"<<endl;
+                cout<<"2. n^2"<<endl;
+                cout<<"Opcion: ";
+                cin>>prediccion;
+
+
+                auto inicioChrono = chrono::high_resolution_clock::now();
                 lista.ordenarLogs();
-                ordenado == true;
+
+                auto finChrono = chrono::high_resolution_clock::now();
+                chrono::duration<double, milli> tiempoChrono = finChrono - inicioChrono;
+                ordenado = true;
+                cout<< "Algotitmo: Merge Sort "<<endl;
+                cout<< "Archivo: "<<nombreArchivo<<endl;
+                cout<< "Tiempo de ejecución: "<<tiempoChrono.count()<<" ms"<<endl;
                 cout<<"Logs ordenados: "<<lista.getSize()<<endl;
                 cout<<"Comparaciones: "<<lista.getComparaciones()<<endl;
                 cout<<"Profundidad maxima: "<<lista.getProfundidadMaxima()<<endl;
+
+                if(prediccion == 1){
+                    cout<<"La prediccion coincide con Merge Sort (n log n)"<<endl;
+                } else if(prediccion ==2){
+                    cout<<"La prediccion no coincide con Merge Sort"<<endl;
+                } else{
+                    cout<<"Error, Prediccion invalida"<<endl;
+                }
+
+                lista.generarArchivo("output608.out");
+                cout<<"Archivo output608.out creado"<<endl;
             }
         } else if(opcion == 2){
             if(ordenado == false){
