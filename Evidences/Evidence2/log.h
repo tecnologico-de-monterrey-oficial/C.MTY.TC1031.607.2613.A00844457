@@ -52,7 +52,7 @@ bool compararFecha(Log a, Log b){
 
 bool validarFecha(string mes, int dia, int anno){
     int numeroMes = numerosMeses(mes);
-    if(numeroMes ==0 || dia<0 || anno<0){
+    if(numeroMes ==0 || dia<=0 || anno<0){
         return false;
     }
 
@@ -75,7 +75,7 @@ bool validarFecha(string mes, int dia, int anno){
         return false;
     }
 
-    return false;
+    return true;
 
 }
 

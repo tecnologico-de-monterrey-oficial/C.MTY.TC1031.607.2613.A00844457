@@ -59,6 +59,8 @@ public:
     void ordenarLogs();
     void generarArchivo(string archivoOutput);
     bool verificarOrdenArchivo();
+    void imprimirAdelante();
+    void imprimirAtras();
 
     T& operator[](int index);
     DoublyLinkedList<T>& operator=(const DoublyLinkedList<T>& lista);
@@ -651,6 +653,28 @@ bool DoublyLinkedList<T>::verificarOrdenArchivo(){
 
 
     return true;
+}
+
+template <typename T>
+void DoublyLinkedList<T>:: imprimirAdelante(){
+    NodeD<T>* aux = head;
+    while(aux != nullptr){
+        cout<<aux-> data<< " ";
+        aux = aux-> next;
+    }
+    cout<<endl;
+
+}
+
+template <typename T>
+void DoublyLinkedList<T>:: imprimirAtras(){
+    NodeD<T>* aux = tail;
+    while(aux!= nullptr){
+        cout<< aux-> data<<" ";
+        aux = aux -> prev;
+    }
+
+    cout<<endl;
 }
 
 

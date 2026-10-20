@@ -6,61 +6,59 @@
 #include <iostream>
 using namespace std;
 
-#include "NodeD.h"
+#include "LinkedList.h"
 
 template <typename T>
 class Stack{
     private: 
-    NodeD<T>* head;
-    int size;
+    LinkedList<T> lista;
+
 
     public: 
-    Stack(): head(nullptr), size(0){}
+    Stack(){}
     T pop();
     void push(T data);
     T top();
-    int getSize();
+
+    T peek(){
+        return top();
+    }
+    bool isEmpty(){
+        return lista.getSize() == 0;
+    }
+    int getSize(){
+        return lista.getSize();
+    }
+
 };
 
 template <typename T>
 T Stack<T>::pop(){
-        if (head == nullptr){
-        throw out_of_range ("Lista vacia");
+    if(isEmpty()== true){
+        throw out_of_range("La lista está vacía ");
+
     }
 
-    NodeD<T>* aux = head;
-    T data = head->data;
-    head = head-> next;
-
-    delete aux;
-    size--;
+    T data = lista.getData(0);
+    lista.deleteAt(0);
     return data;
 
 }
 
 template <typename T>
 void Stack<T>::push( T data){
-    NodeD<T>* nuevo = new NodeD<T>(data);
-    nuevo-> next = head;
-    head = nuevo;
-
-    size++;
+    lista.push_front(data);
 
 }
 
 template <typename T>
 T Stack<T>::top(){
-    if (head == nullptr){
+    if (isEmpty() == true){
         throw out_of_range("Lista vacia");
     }
 
-    return head->data;
+    return lista.getData(0);
 
-}
-
-template <typename T>
-int Stack<T>::getSize(){
-    return size;
 }
 
 

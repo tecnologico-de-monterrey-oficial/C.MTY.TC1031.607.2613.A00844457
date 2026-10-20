@@ -3,43 +3,52 @@
 #include <stdexcept>
 #include <iostream>
 using namespace std;
-#include "Node.h"
+#include "LinkedList.h"
 
 template <typename T>
 class Queue{
     private:
-    Node<T>* head;
-    Node<T>*tail;
-    int size;
+    LinkedList<T> lista;
 
     public:
-    Queue() : head(nullptr), tail(nullptr), size(0){}
+    Queue(){}
     T pop();
     void push(T data);
     T front();
-    int getsize();
+
+    void enqueue(T data){
+        push(data);
+    }
+
+    T dequeue(){
+        return pop();
+    }
+
+    bool isEmpty(){
+        return lista.getSize() ==0;
+    }
+
+    //Deje ambos metodos para evitar problemas con el codigo anterior, ya que antes usaba getsize().
+    int getSize(){
+        return lista.getSize();
+    }
+
+    int getsize(){
+        return getSize();
+    }
+    
+
 };
 
 template <typename T>
 T Queue<T>::pop(){
 
-    if (head == nullptr){
+    if (isEmpty() == true){
         throw out_of_range ("Lista vacia");
     }
 
-    T data = head->data;
-    if (head == tail){
-        Node<T>* aux = head;
-        delete aux;
-        head = nullptr;
-        tail = nullptr;
-    }else {
-        Node<T>* aux = head;
-        head = head -> next;
-        delete aux; 
-    
-    }
-    size --;
+    T data = lista.getData(0);
+    lista.deleteAt(0);
     return data;
     
  
@@ -47,30 +56,17 @@ T Queue<T>::pop(){
 
 template <typename T>
 void Queue<T>::push( T data){
-    if(head != nullptr){
-        tail -> next = new Node<T>(data);
-        tail = tail->next;
-
-    } else { 
-        head = new Node<T>(data);
-        tail = head;
-    }
-    size ++;
+    lista.push_back(data);
 
 }
 
 template <typename T>
 T Queue<T>:: front(){
-    if (head==nullptr ){
+    if (isEmpty() == true ){
         throw out_of_range ("Lista vacía");
     }
-    return head-> data;
+    return lista.getData(0);
 
-}
-
-template <typename T>
-int Queue<T>::getsize(){
-    return size;
 }
 
 
