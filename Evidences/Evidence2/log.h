@@ -50,6 +50,35 @@ bool compararFecha(Log a, Log b){
     return a.hora < b.hora;
 }
 
+bool validarFecha(string mes, int dia, int anno){
+    int numeroMes = numerosMeses(mes);
+    if(numeroMes ==0 || dia<0 || anno<0){
+        return false;
+    }
+
+    int diaMes = 31;
+    if(numeroMes == 4 || numeroMes == 6 || numeroMes == 9 || numeroMes == 11){
+        diaMes = 30;
+    }
+
+    if(numeroMes == 2){
+        diaMes = 28;
+        // Febrero con 29 dias -- prompt
+        if(anno % 400 == 0){
+            diaMes = 29;
+        } else if(anno % 4 == 0 && anno % 100 != 0){
+            diaMes = 29;
+        }
+    }
+
+    if(dia>diaMes){
+        return false;
+    }
+
+    return false;
+
+}
+
 
 
 #endif

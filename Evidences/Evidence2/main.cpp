@@ -73,12 +73,12 @@ int main(){
     cout<<"Total de registros: "<<cont<<endl;
     cout<<"Logs en lista: "<<lista.getSize()<<endl;
 
-    bool ordenado = false; 
+    bool ordenado = lista.verificarOrdenArchivo();
     string buscarMes;
     int buscarFecha;
     int buscarAnno;
     int encontrado = 0;
-    bool buscandoFecha = true;
+    bool buscandoFecha = false;
 
 
 
@@ -95,6 +95,8 @@ int main(){
         if(opcion == 1){
             if(ordenado == true){
                 cout<<"Los registros ya fuero ordenados"<<endl;
+                lista.generarArchivo("output608.out");
+                cout<<"Archivo output608.out creado"<<endl;
             } else{
                 int prediccion;
                 cout<<"Que crecimiento esperas en las comparaciones?"<<endl;
@@ -133,6 +135,7 @@ int main(){
                 cout<<"Primero debes ordenar los logs con la opcion 1"<<endl;
             } else{
                     int encontrado = 0;
+                    buscandoFecha = false;
 
                     cout<< "Mes a buscar: ";
                     cin>>buscarMes;
@@ -140,23 +143,46 @@ int main(){
                     cin>>buscarFecha;
                     cout<< "Buscar Año: ";
                     cin>>buscarAnno;
+                    cout<<"-------------------------------------"<<endl;
 
-                    buscandoFecha = true;
+                    if(validarFecha(buscarMes, buscarFecha, buscarAnno) == false){
+                        cout<<"Fecha invalida"<<endl;
+                    } else{
+                        buscandoFecha = true;
+                        for (int i =0; i<lista.getSize(); i++){
+                            Log aux = lista.getData(i);
+                            if(aux.anno > buscarAnno){
+                                break;
+                            }
 
-                    for (int i =0; i<lista.getSize(); i++){
-                        Log aux = lista.getData(i);
+                            if(aux.anno == buscarAnno && numerosMeses(aux.mes) > numerosMeses(buscarMes)){
+                                break;
+                            }
 
-                        if(aux.mes == buscarMes && aux.fecha == buscarFecha && aux.anno == buscarAnno){
-                            cout<<aux.mes<<" "<<aux.fecha<<" "<<aux.anno<<" "<<aux.hora<<" "<<aux.ip<<" "<<aux.mensaje<<endl;
-                            encontrado ++;
+                            if(aux.anno == buscarAnno && aux.mes == buscarMes && aux.fecha > buscarFecha){
+                                break;
+                            }
+
+                            if(aux.mes == buscarMes && aux.fecha == buscarFecha && aux.anno == buscarAnno){
+                                cout<<aux.mes<<" "<<aux.fecha<<" "<<aux.anno<<" "<<aux.hora<<" "<<aux.ip<<" "<<aux.mensaje<<endl;
+                                encontrado ++;
+                            }
+                        }
+
+                        if(encontrado == 0){
+                            cout<<"-------------------------------------"<<endl;
+                            cout<<"No se encontraron los registros"<<endl;
+
+                        }else{
+                            cout<<"-------------------------------------"<<endl;
+                            cout<<"Registros encontrados: "<<encontrado<<endl;
                         }
                     }
-                    if(encontrado == 0){
-                        cout<<"No se encontraron los registros"<<endl;
 
-                    }else{
-                        cout<<"Registros encontrados: "<<encontrado<<endl;
-                    }
+                    
+
+                    
+                    
 
                     
             }    
@@ -166,7 +192,7 @@ int main(){
             } else{
                 Stack<Log> pila;
                 
-                if(buscarFecha == false){
+                if(buscandoFecha == false){
                     cout<<"Mes: ";
                     cin>> buscarMes;
                     cout<< "Dia: ";
@@ -176,38 +202,42 @@ int main(){
 
                 }
                 
+                if(validarFecha(buscarMes, buscarFecha, buscarAnno) == false){
+                    cout<<"Fecha invalida"<<endl;
+                } else{
+                    buscandoFecha = true;
 
-                buscandoFecha = true;
+                    for (int i=0; i<lista.getSize();i++ ){
+                        Log aux = lista.getData(i);
 
-                for (int i=0; i<lista.getSize();i++ ){
-                    Log aux = lista.getData(i);
+                        if(aux.mes == buscarMes && aux.fecha == buscarFecha && aux.anno == buscarAnno){
+                            pila.push(aux);
+                        }
 
-                    if(aux.mes == buscarMes && aux.fecha == buscarFecha && aux.anno == buscarAnno){
-                        pila.push(aux);
                     }
 
-                }
+                    int encontrado = pila.getSize();
+                    while(pila.getSize()>0){
+                        Log aux = pila.pop();
+                        cout<<aux.mes<<" "<<aux.fecha<<" "<<aux.anno<<" "<<aux.hora<<" "<<aux.ip<<" "<<aux.mensaje<<endl;
+                        
+                    }
 
-                int encontrado = pila.getSize();
-                while(pila.getSize()>0){
-                    Log aux = pila.pop();
-                    cout<<aux.mes<<" "<<aux.fecha<<" "<<aux.anno<<" "<<aux.hora<<" "<<aux.ip<<" "<<aux.mensaje<<endl;
-                    
+                    cout<<"Registros encontrados: "<<encontrado<<endl;
                 }
-
-                cout<<"Registros encontrados: "<<encontrado<<endl;
 
 
 
             }
         }  else if(opcion ==4){
+            // Utilice Map para organizar -- prompt
             map<string, int> fechas;
             map<string, int> mensajes;
             map<string, int> ips;
 
             cout<<"Total de registros: "<<lista.getSize()<<endl;
 
-            for(int i =0; i>lista.getSize(); i++){
+            for(int i =0; i<lista.getSize(); i++){
                 Log aux = lista.getData(i);
 
                 string fecha = aux.mes + " " + to_string(aux.fecha) + " " + to_string(aux.anno);
@@ -228,9 +258,42 @@ int main(){
             cout<<"Fecha con mas incidentes: "<<endl;
             for(auto dato: fechas){
                 if(dato.second == fechaMax){
-                    cout<<dato.first<<"-"<<dato.second<<" registros"<<endl;
+                    cout<<dato.first<<" - "<<dato.second<<" registros"<<endl;
+                    cout<<"-----------------------------------"<<endl;
                 }
             }
+
+            int mensajesMax =0;
+            for(auto dato: mensajes){
+                if(dato.second > mensajesMax){
+                    mensajesMax = dato.second;
+
+                }
+            }
+
+            cout<<"Mensajes mas frecuentes: "<<endl;
+            for(auto dato: mensajes){
+                if(dato.second == mensajesMax){
+                    cout<<dato.first<<" - "<<dato.second<<" registros"<<endl;
+                    cout<<"-----------------------------------"<<endl;
+                }
+            }
+
+            int ipsMax =0;
+            for(auto dato: ips){
+                if(dato.second > ipsMax){
+                    ipsMax = dato.second;
+
+                }
+            }
+
+            cout<<"Ips mas frecuentes: "<<endl;
+            for(auto dato: ips){
+                if(dato.second == ipsMax){
+                    cout<<dato.first<<" - "<<dato.second<<" registros"<<endl;
+                }
+            }
+
 
 
         }   else if(opcion ==5){

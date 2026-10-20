@@ -57,8 +57,8 @@ public:
     void duplicate();
     void removeDuplicates();
     void ordenarLogs();
-
     void generarArchivo(string archivoOutput);
+    bool verificarOrdenArchivo();
 
     T& operator[](int index);
     DoublyLinkedList<T>& operator=(const DoublyLinkedList<T>& lista);
@@ -635,6 +635,24 @@ void DoublyLinkedList<T>:: generarArchivo(string archivoOutput){
 
     archivo.close();
 }
+
+template<typename T>
+bool DoublyLinkedList<T>::verificarOrdenArchivo(){
+    NodeD<T>* aux = head;
+    while(aux != nullptr && aux->next !=nullptr){
+
+        if(compararFecha(aux-> next-> data, aux->data)){
+            return false;
+
+        }
+        aux = aux->next;
+        
+    }
+
+
+    return true;
+}
+
 
 
 
