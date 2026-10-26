@@ -10,7 +10,10 @@
 #include "Queue.h"
 #include "DoublyLinkedList.h"
 #include "Stack.h"
+#include <sstream>
 using namespace std;
+
+
 
 
 int main(){
@@ -44,25 +47,37 @@ int main(){
         cout<<"Los archivos se pudieron abrir"<<endl;
     }
 
+        
     Log registro;
-    int cont =0;
+    int cont = 0;
+    int omitidos = 0;
     Queue<Log> datos;
+    string linea;
 
-    while(true){
-        abrirArchivo>> registro.mes;
-        abrirArchivo>> registro.fecha;
-        abrirArchivo>> registro.anno;
-        abrirArchivo>> registro.hora;
-        abrirArchivo>> registro.ip;
+    while(getline(abrirArchivo, linea)){
+        stringstream leer(linea);
+        bool correcto = false;
 
-        if (!abrirArchivo){
-            break;
+        // Leer los datos del registro
+        if(leer >> registro.mes >> registro.fecha >> registro.anno >> registro.hora >> registro.ip){
+            getline(leer, registro.mensaje);
+
+            if(validarFecha(registro.mes, registro.fecha, registro.anno) == true){
+                if(registro.mensaje.find_first_not_of(' ') != string::npos){
+                    correcto = true;
+                }
+            }
         }
 
-        getline(abrirArchivo, registro.mensaje);
-        datos.push(registro);
-        cont ++;
+        // Guardar el registro 
+        if(correcto == true){
+            datos.push(registro);
+            cont++;
+        } else{
+            omitidos++;
+        }
     }
+
 
     DoublyLinkedList<Log> lista;
     while(datos.getsize() > 0){
@@ -72,6 +87,7 @@ int main(){
 
     cout<<"Total de registros: "<<cont<<endl;
     cout<<"Logs en lista: "<<lista.getSize()<<endl;
+    cout<<"Lineas omitidas: "<<omitidos<<endl;
 
     bool ordenado = lista.verificarOrdenArchivo();
     string buscarMes;
