@@ -566,12 +566,12 @@ NodeD<T>* DoublyLinkedList<T>:: merge(NodeD<T>* left, NodeD<T>* right){
     NodeD<T>* aux;
     comparaciones ++;
 
-    if(compararFecha(left-> data, right-> data)){
+    if(compararFecha(right->data, left->data) == false){
         aux = left;
-        aux->next = merge(left-> next, right);
+        aux->next = merge(left->next, right);
     } else {
         aux = right;
-        aux -> next = merge(left, right-> next);
+        aux->next = merge(left, right->next);
     }
 
     if(aux-> next != nullptr){
